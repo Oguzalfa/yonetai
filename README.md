@@ -1,43 +1,46 @@
-# YönetAI — Yeni Nesil Site ve Apartman Yönetimi
+# YönetAI V15 — Site ve Apartman Yönetimi
 
-YönetAI V14, mobil öncelikli **mavi-beyaz** tasarım sistemiyle hazırlanmış bir etkileşimli site yönetimi ön yüz prototipidir.
+YönetAI, yönetici, site sakini ve saha ekibi için hazırlanan **mobil öncelikli, etkileşimli ürün ön izlemesidir**. Marka renkleri derin lacivert `#0A2953`, kurumsal mavi `#116CD5`, kırık beyaz `#F5F8FC` ve beyazdır. Profesyonel görünümü, doğru içerik hiyerarşisini, tutarlı ikon dilini ve gerçekçi akışları önceliklendirir.
 
-## Canlı demo
+## Canlı uygulama
 
-- Git bağlı yeni sürüm: Vercel `yonetai` projesi
-- Önceki V14 yayını: https://yonetai-v14-premium.vercel.app
+[https://yonetai.vercel.app](https://yonetai.vercel.app) — GitHub `Oguzalfa/yonetai` üzerinden Vercel production.
 
-## Kurulum
+## Modüller
 
-Bu sürüm statik HTML, CSS ve vanilla JavaScript kullanır; ek bağımlılık yoktur.
+**Yönetici:** yönetim özeti, bağımsız bölümler, aidat/tahsilat, finans ve raporlar, örnek banka hareketi eşleştirme, su/elektrik/doğalgaz sayaç merkezi, arıza ve iş emirleri, ziyaretçi yönetimi, taşınma ve izinler, ortak alan rezervasyonları, duyurular, anketler, belgeler ve karar özetleri, hizmet pazarı, sürüm bilgisi.
+
+**Sakin:** ana sayfa, ödeme ön izlemesi, talepler, kendi sayaç kayıtları, duyurular, ziyaretçi daveti, ortak alan rezervasyon başvurusu ve iptali, taşınma bildirimi, belge görüntüleme, anket katılımı, hizmetler ve yardım.
+
+**Saha:** saha özeti, görevler, sayaç kontrol listesi, taşınma takvimi, duyurular ve yardım.
+
+### Örnek etkileşimler
+
+- Rezervasyon başvurusu → tarih/saat çakışma kontrolü → yönetici onayı veya reddi → sakin iptali
+- Taşınma bildirimi → yönetici onayı veya reddi
+- Anket oluşturma → sakin görüşü → katılım oranı → anketi kapatma
+- Daire/tahakkuk kaydı → örnek banka hareketi eşleştirme (tutar doğrulama)
+- Arıza talebi → atama → işlemde → tamamlandı
+- Duyuru ve belge özeti ekleme → kayıtta görüntüleme
+- Global arama → eşleşen daire, talep veya duyuru ekranına yönlendirme
+- CSV dışa/içe aktarma (örnek sayaç verisi), yazdırma, örnek kod kopyalama
+
+**Uyarı:** Bu ekranlar gerçek kullanıcı yönetimi, kimlik doğrulama, ödeme, bankacılık, SMS/e-posta, turnike kontrolü veya sayaç donanımına **bağlı değildir**. Roller yalnızca arayüzü gösterir ve güvenlik yetkisi sağlamaz. Kayıtlar `localStorage` üzerinde aynı tarayıcıya özeldir. Resmî yönetim/hukuki/muhasebe işlemi olarak kullanmayın. Gerçek daire ve sakinlerin kişisel verilerini bu prototipe girmeyin.
+
+## Geliştirme
+
+Ek bağımlılık olmadan çalışır:
 
 ```bash
 python -m http.server 8080
 ```
 
-Tarayıcıdan `http://localhost:8080` adresini açın.
+`http://localhost:8080` adresinde açın. Kaynak kod `index.html`, `style.css`, `app.js` dosyalarıdır. Vektör marka varlıkları `logo.svg`, `logo-lockup.svg`, `favicon.svg` dosyalarındadır.
 
-## Ekranlar
+## QA
 
-- Yönetici: genel bakış, aidat ve tahsilat, finans, bağımsız bölümler, uzaktan sayaç izleme, arıza talepleri, duyurular, ziyaretçi işlemleri ve raporlar.
-- Sakin: aidat detayları, ödeme simülasyonu, ziyaretçi davetleri, duyurular, sayaç ve talep ekranları.
-- Saha ekibi: iş emri ve sayaç kontrol iş akışlarının demo görünümleri.
+`tests/smoke.py` Playwright/Chromium kurulu ortamda çalıştırılır. Yönetici menülerini, rol geçişlerini, rezervasyon/onay, belge ve anket etkileşimlerini, örnek banka eşleştirmesini, arama ekranını ve 320/375/390/430/768/1024/1440 px genişliklerinde taşma denetimini kapsar.
 
-**Tüm veriler temsili örnek veridir.** İşlemler yalnızca tarayıcı içinde simüle edilir veya tarayıcı depolamasında tutulur. Gerçek banka/kart tahsilatı, merkezi veri tabanı, üretim düzeyi kimlik doğrulama, yetkilendirme, fiziksel sayaç veya muhasebe entegrasyonu mevcut değildir. Bu haliyle gerçek sakin verileriyle kullanılmamalıdır.
+## Üretime çıkış ön koşulları
 
-## Tasarım sistemi
-
-- Ana mavi: `#116CD5`
-- Derin lacivert: `#0A2953`
-- Açık zemin: `#F5F8FC`
-- Tipografi: DM Sans + Manrope
-- Mobil ve masaüstü görünümler
-- Mimari görseller: üretilmiş temsili konsept fotoğraflar (harici CDN URL’leri), gerçek siteden çekilmiş görüntüler değildir.
-
-## Dosyalar
-
-`index.html`, `style.css`, `app.js` — düzenlenebilir kaynak kodları.
-
-## Üretim öncesi gereksinimler
-
-Güvenli kimlik doğrulama, sunucu tarafında site/daire bazlı yetki denetimi, veritabanı, ödeme sağlayıcısı entegrasyonu, KVKK veri yönetimi, sayaç gateway/doğrulama altyapısı, denetim kayıtları ve uçtan uca testler gerekir.
+Kimlik doğrulama ve sunucu tarafı yetki, PostgreSQL/Neon veri modeli, işlem günlüğü, ödeme kuruluşu entegrasyonu, banka hareketi doğrulama ve mutabakatı, uzaktan sayaç donanım köprüsü, veri kalite/kalibrasyon, KVKK aydınlatma ve saklama kuralları, iş kuralları, entegrasyon testleri, veri içe alma/taşıma ve felaket kurtarma gerekir.
